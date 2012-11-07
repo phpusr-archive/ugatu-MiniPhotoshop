@@ -228,13 +228,14 @@ public class GraphUtil {
     /**
      * Добавляет вершину на форму
      */
-    public void addVertex() {
+    public void addVertex(String shape) {
         graph.getModel().beginUpdate();
         try {
             int x = (int) (Math.random() * (Const.FRAME_WIDTH - 2 * Const.VERTEX_WIDTH));
             int y = (int) (Math.random() * (Const.FRAME_HEIGHT - 2 * Const.VERTEX_HEIGHT));
-            String title = "";
-            graph.insertVertex(parent, null, title, x, y, Const.VERTEX_WIDTH, Const.VERTEX_HEIGHT);
+            mxCell cell = new mxCell("", new mxGeometry(x, y, Const.VERTEX_WIDTH, Const.VERTEX_HEIGHT), shape);
+            cell.setVertex(true);
+            graph.addCell(cell);
         }
         finally {
             graph.getModel().endUpdate();

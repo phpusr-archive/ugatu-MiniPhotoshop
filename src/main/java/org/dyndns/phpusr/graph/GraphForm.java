@@ -37,7 +37,7 @@ public class GraphForm {
 
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                util.addVertex();
+                util.addVertex("shape=triangle");
             }
         });
         btnEncode.addActionListener(new ActionListener() {
