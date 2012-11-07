@@ -33,6 +33,7 @@ public class GraphForm {
     private JButton btnCircle;
     private JButton btnColor;
     private JButton btnStrokeColor;
+    private JButton btnRotate;
     private GraphUtil util;
 
     public GraphForm(GraphUtil graphUtil) {
@@ -152,14 +153,21 @@ public class GraphForm {
         btnColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
-                if (color != null) util.changeColor(color);
+                util.changeColor(color);
             }
         });
         //Изменение цвета контура фигуры
         btnStrokeColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
-                if (color != null) util.changeStrokeColor(color);
+                util.changeStrokeColor(color);
+            }
+        });
+        //Поворот
+        btnRotate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String value = (String) JOptionPane.showInputDialog(null, mxResources.get("value"), "Rotation (0-360)", JOptionPane.PLAIN_MESSAGE, null, null, ""); //TODO
+                util.rotate(value);
             }
         });
     }

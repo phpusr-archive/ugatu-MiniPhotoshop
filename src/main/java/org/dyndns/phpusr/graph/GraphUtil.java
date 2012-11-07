@@ -136,7 +136,7 @@ public class GraphUtil {
      * @param color
      */
     public void changeColor(Color color) {
-        graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(color));
+        if (color != null) graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(color));
     }
 
     /**
@@ -144,7 +144,20 @@ public class GraphUtil {
      * @param color
      */
     public void changeStrokeColor(Color color) {
-        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(color));
+        if (color != null) graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(color));
+    }
+
+    /**
+     * Поворачивает объект
+     * @param value
+     */
+    public void rotate(String value) {
+        if (value != null) {
+            if (value.equals(mxConstants.NONE)) {
+                value = null;
+            }
+            graph.setCellStyles(mxConstants.STYLE_ROTATION, value);
+        }
     }
 
     public mxGraphComponent getGraphComponent() {
