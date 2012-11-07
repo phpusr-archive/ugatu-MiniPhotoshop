@@ -13,13 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 
@@ -94,61 +93,12 @@ public class GraphUtil {
      * Запускается при изменении графа
      */
     private void onChange() {
-        changeEdgeTitles();
         //Сброс стиля для веришн
         resetStyleCells(graph.getChildVertices(parent));
         //Сброс стиля для граней
         resetStyleCells(graph.getChildEdges(parent));
 
-        task();
-
         graph.refresh();
-    }
-
-    /**
-     * Находит расстояния в графе: диаметр, центр, радиус графа
-     */
-    private void task() {
-        mxCell diametr, radius;
-        Set<mxCell> maxEdgeList = new HashSet<mxCell>();
-        final Object[] vertices = graph.getChildVertices(parent);
-
-        if (vertices.length > 0) {
-            System.out.println("\n\n========= Vertices =========");
-            for (Object vertice : vertices) {
-                mxCell cell = (mxCell) vertice;
-                mxCell maxEdge = getMaxEdge(cell);
-                if (maxEdge != null) {
-                    maxEdgeList.add(maxEdge);
-                }
-            }
-        }
-
-        if (maxEdgeList.size() > 0) {
-            diametr = maxEdgeList.iterator().next();
-            radius = diametr;
-            for (mxCell edge : maxEdgeList) {
-                if (getDist(edge).compareTo(getDist(diametr)) > 0) {
-                    diametr = edge;
-                }
-                if (getDist(edge).compareTo(getDist(radius)) < 0) {
-                    radius = edge;
-                }
-            }
-
-            System.out.println("=============================");
-            showDiametr(diametr);
-            System.out.println("Diametr: " + getDist(diametr) + "; " + diametr);
-
-            for (mxCell edge : maxEdgeList) {
-                if (getDist(edge).compareTo(getDist(radius)) == 0) {
-                    showRadius(edge);
-                    System.out.println("Radius: " + getDist(edge) + "; " + edge);
-                }
-            }
-            System.out.println("=============================");
-        }
-
     }
 
     /**
@@ -172,34 +122,6 @@ public class GraphUtil {
     }
 
     /**
-     * Находит максимальную по длине грань в передаваемой вершине
-     * @param cell Вершина
-     * @return Максимальная по длине грань
-     */
-    private mxCell getMaxEdge(mxCell cell) {
-        if (cell.getEdgeCount() > 0) {
-            mxCell maxEdge = (mxCell) cell.getEdgeAt(0);
-
-            if (getDist(maxEdge) != null) {
-                for (int i=0; i<cell.getEdgeCount(); i++) {
-                    final mxCell edge = (mxCell) cell.getEdgeAt(i);
-
-                    final Double distEdge = getDist(edge);
-                    final Double distMaxEdge = getDist(maxEdge);
-                    if (distEdge!=null && distEdge.compareTo(distMaxEdge) > 0) {
-                        maxEdge = edge;
-                    }
-                }
-
-                System.out.println(cell.getValue() + ": maxEdge=" + getDist(maxEdge, 7));
-                return maxEdge;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Сброс стиля ячеек на стандартный
      * @param objects Масив вершин
      */
@@ -211,18 +133,6 @@ public class GraphUtil {
         graph.setCellStyles(mxConstants.STYLE_FONTCOLOR, mxUtils.hexString(Const.FONTCOLOR_DEF), objects);
         graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, Const.STROKEWIDTH_DEF, objects);
 
-    }
-
-    /**
-     * Показывает длину грани на ее заголовке
-     */
-    private void changeEdgeTitles() {
-        final Object[] edges = graph.getChildEdges(parent);
-
-        for (Object edge : edges) {
-            mxCell cell = (mxCell) edge;
-            cell.setValue(getDist(cell, 7));
-        }
     }
 
     /**
@@ -250,35 +160,21 @@ public class GraphUtil {
     }
 
     /**
-     * Возвращает длину грани
-     * @param cell Грань
-     * @return Длина грани
+     * Изменяет цвет
+     * @param color
      */
-    private Double getDist(mxCell cell) {
-        logger.debug("getDist()");
-
-        if (cell.getSource() != null && cell.getTarget() != null) {
-            final mxGeometry sourcePoint = cell.getSource().getGeometry();
-            final mxGeometry targetPoint = cell.getTarget().getGeometry();
-
-            final double width = Math.pow(sourcePoint.getX() - targetPoint.getX(), 2);
-            final double height = Math.pow(sourcePoint.getY() - targetPoint.getY(), 2);
-
-            return Math.pow(width + height, (double)1/2);
-        } else {
-            return null;
-        }
+    public void changeColor(Color color) {
+        mxCell cell = (mxCell) graph.getSelectionCell();
+        graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(color), new Object[]{cell});
     }
 
     /**
-     * Возвращает длину грани в виде строки, с указанным размером
-     * @param cell Грань
-     * @param length Длина возвращаемой строки
-     * @return Длина грани
+     * Изменяет цвет обводки
+     * @param color
      */
-    private String getDist(mxCell cell, int length) {
-        final Double dist = getDist(cell);
-        return dist != null && dist.toString().length() >= length ? dist.toString().substring(0, length-1) : "";
+    public void changeStrokeColor(Color color) {
+        mxCell cell = (mxCell) graph.getSelectionCell();
+        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(color), new Object[]{cell});
     }
 
     public mxGraphComponent getGraphComponent() {

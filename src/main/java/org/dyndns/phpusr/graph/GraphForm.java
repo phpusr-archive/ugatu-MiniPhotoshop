@@ -30,20 +30,30 @@ public class GraphForm {
     private JButton btnDelete;
     private JButton btnAbout;
     private JButton btnSquare;
+    private JButton btnCircle;
+    private JButton btnColor;
+    private JButton btnStrokeColor;
     private GraphUtil util;
 
     public GraphForm(GraphUtil graphUtil) {
         this.util = graphUtil;
         localizeForm();
-
+        //Треугольник
         btnTriangle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 util.addVertex("shape=triangle");
             }
         });
+        //Квадрат
         btnSquare.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 util.addVertex(null);
+            }
+        });
+        //Окружность
+        btnCircle.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                util.addVertex("shape=ellipse");
             }
         });
         btnEncode.addActionListener(new ActionListener() {
@@ -136,6 +146,18 @@ public class GraphForm {
                         JOptionPane.QUESTION_MESSAGE,
                         new ImageIcon(GraphForm.class.getResource("images/phpusr.png"))
                 );
+            }
+        });
+        btnColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                final Color color = JColorChooser.showDialog(null, "Title", null);
+                util.changeColor(color);
+            }
+        });
+        btnStrokeColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                final Color color = JColorChooser.showDialog(null, "Title", null);
+                util.changeStrokeColor(color);
             }
         });
     }
