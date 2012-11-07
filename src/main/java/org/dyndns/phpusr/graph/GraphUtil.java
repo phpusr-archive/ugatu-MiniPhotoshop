@@ -47,21 +47,22 @@ public class GraphUtil {
         parent = graph.getDefaultParent();
 
         graphComponent = new mxGraphComponent(graph);
+        graphComponent.setConnectable(false);
 
         graph.getModel().addListener(mxEvent.CHANGE, new mxEventSource.mxIEventListener() {
             public void invoke(Object sender, mxEventObject evt) {
                 logger.debug("CHANGE");
-                onChange();
+                //onChange();
             }
         });
         graph.addListener(mxEvent.ADD_CELLS, new mxEventSource.mxIEventListener() {
             public void invoke(Object sender, mxEventObject evt) {
                 logger.debug("ADD_CELLS");
 
-                changeEdgeTitles();
-                resetStyleCells((Object[]) evt.getProperty("cells"));
+                //changeEdgeTitles();
+                //resetStyleCells((Object[]) evt.getProperty("cells"));
 
-                graph.refresh();
+                //graph.refresh();
             }
         });
         getGraphComponent().getGraphControl().addMouseListener(new MouseAdapter() {
@@ -232,7 +233,7 @@ public class GraphUtil {
         try {
             int x = (int) (Math.random() * (Const.FRAME_WIDTH - 2 * Const.VERTEX_WIDTH));
             int y = (int) (Math.random() * (Const.FRAME_HEIGHT - 2 * Const.VERTEX_HEIGHT));
-            String title = Const.VERTEX_NAME_STD + " " + Integer.toString(++countVertex);
+            String title = "";
             graph.insertVertex(parent, null, title, x, y, Const.VERTEX_WIDTH, Const.VERTEX_HEIGHT);
         }
         finally {
