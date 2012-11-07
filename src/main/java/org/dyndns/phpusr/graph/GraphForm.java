@@ -19,7 +19,7 @@ import java.io.IOException;
 public class GraphForm {
     private static GraphForm INSTANCE;
 
-    private JButton btnAdd;
+    private JButton btnTriangle;
     private JPanel pnlMain;
     private JPanel pnlGraph;
     private JButton btnEncode;
@@ -29,15 +29,21 @@ public class GraphForm {
     private JButton btnNew;
     private JButton btnDelete;
     private JButton btnAbout;
+    private JButton btnSquare;
     private GraphUtil util;
 
     public GraphForm(GraphUtil graphUtil) {
         this.util = graphUtil;
         localizeForm();
 
-        btnAdd.addActionListener(new ActionListener() {
+        btnTriangle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 util.addVertex("shape=triangle");
+            }
+        });
+        btnSquare.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                util.addVertex(null);
             }
         });
         btnEncode.addActionListener(new ActionListener() {
@@ -141,7 +147,7 @@ public class GraphForm {
         btnNew.setText(mxResources.get("new"));
         btnOpen.setText(mxResources.get("openFile"));
         btnSave.setText(mxResources.get("saveFile"));
-        btnAdd.setText(mxResources.get("add"));
+        btnTriangle.setText(mxResources.get("add"));
         btnDelete.setText(mxResources.get("delete"));
         btnEncode.setText(mxResources.get("encode"));
         btnExit.setText(mxResources.get("exit"));

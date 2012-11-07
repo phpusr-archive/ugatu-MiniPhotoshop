@@ -12,7 +12,7 @@ public class Const {
     public static final int FRAME_HEIGHT = 600;
 
     public static final int VERTEX_WIDTH = 80;
-    public static final int VERTEX_HEIGHT = 30;
+    public static final int VERTEX_HEIGHT = 80;
 
     public static final String VERTEX_NAME_STD = "Vertex";
     public static final String CHOOSE_FILE_FILTER_DESCRIP = "Graph Drawing file (.txt)";
