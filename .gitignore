@@ -1,3 +1,5 @@
+.idea
+bin/*.jar
 out
 *.log
 *.zip
