@@ -1,6 +1,7 @@
 package org.dyndns.phpusr.graph;
 
 import com.mxgraph.examples.swing.editor.DefaultFileFilter;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxResources;
 
 import javax.swing.*;
@@ -34,6 +35,8 @@ public class GraphForm {
     private JButton btnColor;
     private JButton btnStrokeColor;
     private JButton btnRotate;
+    private JButton btnHexagon;
+    private JButton btnStar;
     private GraphUtil util;
 
     public GraphForm(GraphUtil graphUtil) {
@@ -55,6 +58,19 @@ public class GraphForm {
         btnCircle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 util.addVertex("shape=ellipse");
+            }
+        });
+        //Пятиугольник
+        btnHexagon.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                util.addVertex("shape=hexagon");
+            }
+        });
+        //Звезда
+        btnStar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                util.addVertex("shape=" + mxConstants.SHAPE_RHOMBUS);
+                //"image;image=/com/mxgraph/examples/swing/images/bell.png"
             }
         });
         btnEncode.addActionListener(new ActionListener() {
@@ -152,21 +168,22 @@ public class GraphForm {
         //Изменение цвета фигуры
         btnColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
+                final Color color = JColorChooser.showDialog(null, mxResources.get("color.fill"), null);
                 util.changeColor(color);
             }
         });
         //Изменение цвета контура фигуры
         btnStrokeColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
+                final Color color = JColorChooser.showDialog(null, mxResources.get("color.stroke"), null);
                 util.changeStrokeColor(color);
             }
         });
         //Поворот
         btnRotate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String value = (String) JOptionPane.showInputDialog(null, mxResources.get("value"), "Rotation (0-360)", JOptionPane.PLAIN_MESSAGE, null, null, ""); //TODO
+                String value = (String) JOptionPane.showInputDialog(null, mxResources.get("value"),
+                        mxResources.get("rotate.message"), JOptionPane.PLAIN_MESSAGE, null, null, "");
                 util.rotate(value);
             }
         });
@@ -179,7 +196,17 @@ public class GraphForm {
         btnNew.setText(mxResources.get("new"));
         btnOpen.setText(mxResources.get("openFile"));
         btnSave.setText(mxResources.get("saveFile"));
-        btnTriangle.setText(mxResources.get("add"));
+
+        btnTriangle.setText(mxResources.get("triangle"));
+        btnSquare.setText(mxResources.get("square"));
+        btnCircle.setText(mxResources.get("circle"));
+        btnHexagon.setText(mxResources.get("hexagon"));
+        btnStar.setText(mxResources.get("star"));
+
+        btnColor.setText(mxResources.get("color.fill"));
+        btnStrokeColor.setText(mxResources.get("color.stroke"));
+        btnRotate.setText(mxResources.get("rotate.title"));
+
         btnDelete.setText(mxResources.get("delete"));
         btnEncode.setText(mxResources.get("encode"));
         btnExit.setText(mxResources.get("exit"));
