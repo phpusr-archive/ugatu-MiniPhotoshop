@@ -57,11 +57,8 @@ public class GraphUtil {
         graph.addListener(mxEvent.ADD_CELLS, new mxEventSource.mxIEventListener() {
             public void invoke(Object sender, mxEventObject evt) {
                 logger.debug("ADD_CELLS");
-
-                //changeEdgeTitles();
-                //resetStyleCells((Object[]) evt.getProperty("cells"));
-
-                //graph.refresh();
+                resetStyleCells((Object[]) evt.getProperty("cells"));
+                graph.refresh();
             }
         });
         getGraphComponent().getGraphControl().addMouseListener(new MouseAdapter() {
@@ -95,30 +92,7 @@ public class GraphUtil {
     private void onChange() {
         //Сброс стиля для веришн
         resetStyleCells(graph.getChildVertices(parent));
-        //Сброс стиля для граней
-        resetStyleCells(graph.getChildEdges(parent));
-
         graph.refresh();
-    }
-
-    /**
-     * Показывает диаметр на изображении графа
-     * @param diametr Диаметр
-     */
-    private void showDiametr(mxCell diametr) {
-        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(Const.STROKECOLOR_DIAMETR), new Object[]{diametr});
-    }
-
-    /**
-     * Показывает радиус на изображении графа
-     * @param radius Радиус
-     */
-    private void showRadius(mxCell radius) {
-        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(Const.STROKECOLOR_RADIUS), new Object[]{radius});
-        if (radius.getSource() != null) {
-            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(Const.STROKECOLOR_RADIUS), new Object[]{radius.getSource()});
-            graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(Const.FILLCOLOR_RADIUS), new Object[]{radius.getSource()});
-        }
     }
 
     /**
@@ -126,13 +100,11 @@ public class GraphUtil {
      * @param objects Масив вершин
      */
     private void resetStyleCells(Object[] objects) {
-
         graph.setCellStyles(mxConstants.STYLE_FONTSIZE, Const.FONT_SIZE_DEF, objects);
         graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(Const.STROKECOLOR_DEF), objects);
         graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(Const.FILLCOLOR_DEF), objects);
         graph.setCellStyles(mxConstants.STYLE_FONTCOLOR, mxUtils.hexString(Const.FONTCOLOR_DEF), objects);
         graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, Const.STROKEWIDTH_DEF, objects);
-
     }
 
     /**
@@ -164,8 +136,7 @@ public class GraphUtil {
      * @param color
      */
     public void changeColor(Color color) {
-        mxCell cell = (mxCell) graph.getSelectionCell();
-        graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(color), new Object[]{cell});
+        graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, mxUtils.hexString(color));
     }
 
     /**
@@ -173,8 +144,7 @@ public class GraphUtil {
      * @param color
      */
     public void changeStrokeColor(Color color) {
-        mxCell cell = (mxCell) graph.getSelectionCell();
-        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(color), new Object[]{cell});
+        graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, mxUtils.hexString(color));
     }
 
     public mxGraphComponent getGraphComponent() {

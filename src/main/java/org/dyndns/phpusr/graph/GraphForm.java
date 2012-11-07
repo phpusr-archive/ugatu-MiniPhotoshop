@@ -148,16 +148,18 @@ public class GraphForm {
                 );
             }
         });
+        //Изменение цвета фигуры
         btnColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final Color color = JColorChooser.showDialog(null, "Title", null);
-                util.changeColor(color);
+                final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
+                if (color != null) util.changeColor(color);
             }
         });
+        //Изменение цвета контура фигуры
         btnStrokeColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final Color color = JColorChooser.showDialog(null, "Title", null);
-                util.changeStrokeColor(color);
+                final Color color = JColorChooser.showDialog(null, "Title", null); //TODO заголовок
+                if (color != null) util.changeStrokeColor(color);
             }
         });
     }
