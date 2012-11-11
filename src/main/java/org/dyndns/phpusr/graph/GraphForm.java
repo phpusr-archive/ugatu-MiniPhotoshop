@@ -66,7 +66,7 @@ public class GraphForm {
                 util.addVertex("shape=hexagon");
             }
         });
-        //Звезда
+        //Ромб
         btnStar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 util.addVertex("shape=" + mxConstants.SHAPE_RHOMBUS);
